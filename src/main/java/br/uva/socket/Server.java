@@ -15,27 +15,26 @@ import java.net.Socket;
  * @author 19485701730
  */
 public class Server {
-    
+
     public static void main(String[] args) {
         System.out.println("Iniciando servidor...");
         try(final ServerSocket server = new ServerSocket(12345)) {
                 System.out.println("Aguardando conexoes...");
-            boolean run = true;
-            while(run) {
+            while(true) {
                 try(final Socket socket = server.accept();
                         final DataInputStream in = new DataInputStream(socket.getInputStream());
                         final DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
                     System.out.println("Cliente conectado. Aguardando operações...");
-                    while(socket.isConnected()) {
+                    while(!socket.isClosed()) {
                         byte opId;
                         try {
                             opId = in.readByte();
                             System.out.println("Operação recebida: " + opId);
                             if(opId == 0) {
-                                run = false;
-                                break;
+                                System.out.println("Fechando servidor (Op. 0)...");
+                                return;
                             }
-                            final SocketProgram.Operacao op = SocketProgram.Operacao.findById(opId);
+                            final SocketProgram.Operation op = SocketProgram.Operation.findById(opId);
                             if(op == null) {
                                 out.writeUTF("Operacao inexistente.");
                                 out.flush();
@@ -55,12 +54,8 @@ public class Server {
                             break;
                         }
                     }
-                    in.close();
-                    socket.close();
                 }
             }
-            System.out.println("Fechando servidor...");
-            server.close();
         } catch(Exception exception) {
             exception.printStackTrace();
         }
