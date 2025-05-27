@@ -10,10 +10,6 @@ import java.io.EOFException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- *
- * @author 19485701730
- */
 public class Server {
 
     public static void main(String[] args) {
