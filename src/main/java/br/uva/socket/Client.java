@@ -10,10 +10,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-/**
- *
- * @author 19485701730
- */
 public class Client {
     
     private static void pause() {
