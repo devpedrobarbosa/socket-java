@@ -7,10 +7,6 @@ package br.uva.socket;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-/**
- *
- * @author 19485701730
- */
 public class SocketProgram {
 
     public interface Function3<A, B, R> {
